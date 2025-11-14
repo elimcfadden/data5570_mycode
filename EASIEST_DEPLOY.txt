@@ -1,0 +1,43 @@
+═══════════════════════════════════════════════════════════════
+  EASIEST DEPLOYMENT - Just Copy & Paste These Commands
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Open 3 PowerShell Windows
+
+STEP 2: In PowerShell Window #1 (Backend):
+─────────────────────────────────────────────
+cd C:\Users\elimc\data5570_mycode
+git checkout master
+python -m pip install django djangorestframework django-cors-headers
+python manage.py migrate
+python manage.py runserver
+
+(Keep this window open - backend is running on http://localhost:8000)
+
+
+STEP 3: In PowerShell Window #2 (Frontend):
+─────────────────────────────────────────────
+cd C:\Users\elimc\data5570_mycode
+git checkout expo-app
+npm install
+npx expo start --web
+
+(Keep this window open - frontend is running on http://localhost:8081)
+
+
+STEP 4: In PowerShell Window #3 (Create Public URL):
+──────────────────────────────────────────────────────
+npx -y localtunnel --port 8081
+
+(COPY THE URL IT SHOWS - that's your submission link!)
+(It will look like: https://xxxx.loca.lt)
+
+
+═══════════════════════════════════════════════════════════════
+  YOUR SUBMISSION LINK = The URL from Step 4
+═══════════════════════════════════════════════════════════════
+
+That's it! The app is now publicly accessible.
+
+To stop: Close the 3 PowerShell windows.
+

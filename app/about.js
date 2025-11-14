@@ -89,7 +89,7 @@ export default function AboutPage() {
             </TouchableOpacity>
           </Link>
           <Link href="/add-customer" asChild>
-            <TouchableOpacity style={[styles.navButton, styles.addButton]}>
+            <TouchableOpacity style={styles.addCustomerButton}>
               <Text style={styles.navButtonText}>Add Customer</Text>
             </TouchableOpacity>
           </Link>
@@ -206,6 +206,15 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: '#34C759',
+  },
+  addCustomerButton: {
+    backgroundColor: '#34C759',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
   },
   navButtonText: {
     color: 'white',

@@ -1,0 +1,39 @@
+═══════════════════════════════════════════════════════════════
+  HOW TO RUN TUNNELS (So They Don't "Freeze")
+═══════════════════════════════════════════════════════════════
+
+The tunnel commands keep running (they don't freeze - they're working!).
+You need to run them in SEPARATE PowerShell windows.
+
+═══════════════════════════════════════════════════════════════
+
+WINDOW 1: Backend Tunnel
+──────────────────────────
+npx -y localtunnel --port 8000
+
+This will show: "your url is: https://two-goats-care.loca.lt"
+Keep this window open!
+
+
+WINDOW 2: Frontend Tunnel  
+──────────────────────────
+npx -y localtunnel --port 8081
+
+This will show: "your url is: https://little-sheep-stare.loca.lt"
+Keep this window open!
+
+
+═══════════════════════════════════════════════════════════════
+
+YOUR PUBLIC URLS:
+──────────────────
+Frontend: https://little-sheep-stare.loca.lt
+Backend:  https://two-goats-care.loca.lt/api
+
+Tunnel Password (for both): 69.162.242.147
+
+═══════════════════════════════════════════════════════════════
+
+The tunnels will keep running - that's normal! They need to stay
+open to keep the connection alive. Just minimize those windows.
+

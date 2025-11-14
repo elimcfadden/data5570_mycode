@@ -1,0 +1,63 @@
+═══════════════════════════════════════════════════════════════
+  EC2 DEPLOYMENT COMMANDS
+═══════════════════════════════════════════════════════════════
+
+Copy and paste these commands one by one into your EC2 terminal:
+
+───────────────────────────────────────────────────────────────
+
+# 1. Update system
+sudo apt update
+
+# 2. Install dependencies
+sudo apt install -y python3-pip python3-venv git curl screen
+
+# 3. Clone repository
+git clone https://github.com/elimcfadden/data5570_mycode.git
+cd data5570_mycode
+git checkout master
+
+# 4. Set up Python environment
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# 5. Run migrations
+python manage.py migrate
+
+# 6. Install Cloudflared
+curl -L https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-archive-keyring.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-archive-keyring.gpg] https://pkg.cloudflare.com/cloudflared $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflared.list
+sudo apt update
+sudo apt install -y cloudflared
+
+# 7. Stop any existing services
+screen -S django -X quit 2>/dev/null || true
+screen -S cloudflare -X quit 2>/dev/null || true
+pkill -f "manage.py runserver" 2>/dev/null || true
+
+# 8. Start Django server (in background)
+cd /home/ubuntu/data5570_mycode
+source venv/bin/activate
+screen -dmS django bash -c "cd /home/ubuntu/data5570_mycode && source venv/bin/activate && python manage.py runserver 0.0.0.0:8000"
+
+# 9. Wait a moment
+sleep 3
+
+# 10. Start Cloudflare tunnel (in background)
+screen -dmS cloudflare bash -c "cloudflared tunnel --url http://localhost:8000"
+
+# 11. Get your public URL
+echo ""
+echo "=== DEPLOYMENT COMPLETE ==="
+echo ""
+echo "To see your Cloudflare URL, run:"
+echo "  screen -r cloudflare"
+echo ""
+echo "Look for a line like:"
+echo "  https://xxxx.trycloudflare.com"
+echo ""
+echo "That's your permanent backend URL!"
+
+═══════════════════════════════════════════════════════════════
+
